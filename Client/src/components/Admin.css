@@ -20,15 +20,6 @@ h1 {
   margin-bottom: 20px;
   color: #333; /* Add a text color */
 }
-.branch{
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #333; /* Add a text color */
-
-}
 
 h2 {
   font-size: 26px;
@@ -46,7 +37,7 @@ table {
 }
 
 th, td {
-  padding: 12px 20px; /* Slightly reduce padding for better compactness */
+  padding: 12px 20px !important; /* Use !important to override any inline styles */
   text-align: left;
   border-bottom: 1px solid #ddd;
   font-size: 16px; /* Reduce font size in the table */
@@ -99,16 +90,34 @@ select {
   background-repeat: no-repeat;
 }
 
-button[type="submit"] {
-  background-color: #007bff;
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.button-container button {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.update-button {
+  background-color: #28a745;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 12px 20px;
   font-size: 16px;
-  cursor: pointer;
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
+.delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+.button-container button:hover {
+  opacity: 0.8; /* Reduce opacity on hover */
 }
