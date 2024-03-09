@@ -1,22 +1,48 @@
 /* Admin.css */
 
 .admin-container {
-  max-width: 800px;
+  max-width: 1200px; /* Set max-width to 1200px */
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
+  background-color: #f8f9fa; /* Add a light background color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.form-container {
+  max-width: 600px; /* Set max-width of form container to 600px */
+  margin: 0 auto; /* Center the form container */
 }
 
 h1 {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #333; /* Add a text color */
+}
+.branch{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333; /* Add a text color */
+
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333; /* Add a text color */
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px; /* Move the table on top */
+  color: #333; /* Add a text color */
+  overflow-x: auto; /* Add horizontal scrolling */
 }
 
 th, td {
@@ -24,11 +50,13 @@ th, td {
   text-align: left;
   border-bottom: 1px solid #ddd;
   font-size: 16px; /* Reduce font size in the table */
+  color: #333; /* Add a text color */
 }
 
 th {
   background-color: #f2f2f2;
   font-weight: bold;
+  color: #333; /* Add a text color */
 }
 
 tr:nth-child(even) {
@@ -51,6 +79,7 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #333; /* Add a text color */
 }
 
 input[type="text"],
@@ -60,6 +89,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  color: #333; /* Add a text color */
 }
 
 select {
