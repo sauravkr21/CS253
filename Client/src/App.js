@@ -11,6 +11,7 @@ import Courses from './components/Courses/Courses';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Announcement from './components/Announcement/Announcement';
+import Admin from './components/Admin';
 
 
 const App =()=>{
@@ -25,6 +26,7 @@ const App =()=>{
       <Route path='/announcement' element={<Announcement/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/signup' element={<Signup/>}></Route>
+      <Route path='/admin' element={<Admin/>}></Route>
     </Routes>
     </>
   )
