@@ -1,11 +1,16 @@
 import React from 'react';
-
-const CourseClash =()=>{
+import "./CourseClash.css";
+const CourseClash = () => {
   return (
     <div>
-      This is CourseClash
+      {}
+      <button className="course-clash-button">
+        <a href="https://www.google.com/" className="course-clash-link">
+          Go to Course Clash
+        </a>
+      </button>
     </div>
-  )
+  );
 }
 
-export default CourseClash
+export default CourseClash;
