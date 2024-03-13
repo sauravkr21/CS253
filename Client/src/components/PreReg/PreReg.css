@@ -1,0 +1,46 @@
+
+
+
+  .flex-container {
+    
+    flex-direction: row; 
+    height: 100vh;
+    background-color: rgb(241, 198, 175);
+    
+  }
+  .calendar tr{
+    background-color: antiquewhite;
+    color: aquamarine;
+  }
+   .calendar tr th{
+    background-color: antiquewhite;
+    color: rgb(6, 6, 6);
+  }
+
+.course-btn{
+    display: flex;
+    
+}
+.course-btn button{
+    padding: 5px 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(35, 163, 163);
+    margin: 5px 10px;
+    font-size: 1.5rem;
+    border-radius: 12px; 
+    width: 
+}
+.course-btn #searchcourse{
+  max-width: 770px ;
+}
+.course-btn #coursedescriptionbutton{
+  ;
+
+}
+  
+    .button:hover {
+      background-color: #45a049;
+      
+    }
+    
+ 
