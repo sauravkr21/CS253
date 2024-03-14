@@ -1,7 +1,7 @@
 /* Admin.css */
 
 .admin-container {
-  max-width: 1200px; /* Set max-width to 1200px */
+  max-width: 1300px; /* Set max-width to 1200px */
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -25,6 +25,7 @@ h2 {
   font-size: 26px;
   font-weight: bold;
   margin-bottom: 20px;
+  margin-top: 20px;
   color: #333; /* Add a text color */
 }
 
@@ -73,7 +74,7 @@ label {
   color: #333; /* Add a text color */
 }
 
-input[type="text"],
+input[type="text"], input[type="number"], 
 select {
   width: 100%;
   padding: 10px;
@@ -82,6 +83,22 @@ select {
   font-size: 16px;
   color: #333; /* Add a text color */
 }
+
+.input-text,
+.input-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.input-textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 100px; /* Set a minimum height */
+}
+
 
 select {
   appearance: none;
@@ -101,21 +118,32 @@ select {
 }
 
 .update-button {
-  background-color: #28a745;
-  color: #fff;
+  background-color: #377b63; /* Dark Green */
+  color: #fff; /* White */
   border: none;
   border-radius: 5px;
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 10px 15px; /* Slightly smaller padding */
+  font-size: 14px; /* Slightly smaller font size */
 }
 
 .delete-button {
-  background-color: #dc3545;
-  color: #fff;
+  background-color: #da3646; /* Dark Red */
+  color: #fff; /* White */
   border: none;
   border-radius: 5px;
+  padding: 10px 15px; /* Slightly smaller padding */
+  font-size: 14px; /* Slightly smaller font size */
+}
+
+
+.save-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none; 
+  border-radius: 5px; 
   padding: 12px 20px;
-  font-size: 16px;
+  font-size: 16px; 
+  cursor: pointer; 
 }
 
 .button-container button:hover {

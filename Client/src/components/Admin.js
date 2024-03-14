@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Admin.css';
 
 const initialCourseData = [
@@ -59,6 +59,16 @@ const App = () => {
   const [selectedBranch, setSelectedBranch] = useState(''); // Default branch
   const [searchText, setSearchText] = useState('');
   const [editingId, setEditingId] = useState(null);
+  // const [filteredCourses, setFilteredCourses] = useState([]);
+
+  useEffect(() => {
+    // Function to filter course data based on search text
+    const searchTextLower = searchText.toLowerCase();
+    const filteredCourses = courseData.filter((course) =>
+      course.courseName.toLowerCase().includes(searchTextLower)
+    );
+    setCourseData(filteredCourses);
+  }, [searchText, courseData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,8 +88,9 @@ const App = () => {
     } else {
       setCourseData([...courseData, { ...formData, id: courseData.length + 1 }]);
     }
+    // Clear the form fields
     setFormData({
-      id: '',
+      ...formData,
       branch: '',
       courseId: '',
       courseName: '',
@@ -89,7 +100,8 @@ const App = () => {
       status: '',
     });
     setEditingId(null);
-  };
+};
+
 
   const handleEdit = (id) => {
     const courseToEdit = courseData.find((course) => course.id === id);
@@ -110,16 +122,16 @@ const App = () => {
     const { value } = e.target;
     setSearchText(value);
     const searchTextLower = value.toLowerCase();
-    // Filter courses based on search text
-    const filteredCourses = initialCourseData.filter((course) =>
-      course.branch.toLowerCase().includes(searchTextLower) ||
-      course.courseId.toLowerCase().includes(searchTextLower) ||
-      course.courseName.toLowerCase().includes(searchTextLower) ||
-      String(course.credits).includes(value) ||
-      course.time.toLowerCase().includes(searchTextLower) ||
-      course.instructor.toLowerCase().includes(searchTextLower) ||
-      course.status.toLowerCase().includes(searchTextLower) ||
-      course.remarks.toLowerCase().includes(searchTextLower)
+  
+    // If the search input is empty, display all courses
+    if (value.trim() === '') {
+      setCourseData(initialCourseData);
+      return;
+    }
+  
+    // Filter courses based on course name
+    const filteredCourses = courseData.filter((course) =>
+      course.courseName.toLowerCase().includes(searchTextLower)
     );
     setCourseData(filteredCourses);
   };
@@ -176,10 +188,10 @@ const App = () => {
               <td>{course.instructor}</td>
               <td>{course.status}</td>
               <td>
-                <button onClick={() => handleEdit(course.id)}>Edit</button>
+                <button className="update-button" onClick={() => handleEdit(course.id)}>Edit</button>
               </td>
               <td>
-                <button onClick={() => handleDelete(course.id)}>Delete</button>
+                <button className="delete-button" onClick={() => handleDelete(course.id)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -209,7 +221,7 @@ const App = () => {
           </div>
           <div className="form-group">
             <label htmlFor="credits">Credits:</label>
-            <input type="text" id="credits" name="credits" value={formData.credits} onChange={handleChange} required />
+            <input type="number" id="credits" name="credits" value={formData.credits} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="time">Time:</label>
@@ -226,7 +238,28 @@ const App = () => {
               <option value="Inactive">Inactive</option>
             </select>
           </div>
-          <button type="submit">Save</button>
+          <button className="save-button"type="submit">Save</button>
+        </form>
+      </div>
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <h2>Add Announcement</h2>
+          <div className="form-group">
+            <label htmlFor="announcementHeading">Announcement Heading:</label>
+            <input type="text" id="announcementHeading" name="announcementHeading" value={formData.announcementHeading} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="announcementInfo">Announcement Information:</label>
+            <textarea
+              id="announcementInfo"
+              name="announcementInfo"
+              value={formData.announcementInfo}
+              onChange={handleChange}
+              required
+              className="input-text" // Apply the same CSS class as input elements
+            />
+          </div>
+          <button className="save-button" type="submit">Save Announcement</button>
         </form>
       </div>
     </div>
