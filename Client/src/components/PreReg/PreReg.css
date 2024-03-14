@@ -22,7 +22,7 @@
     
 }
 .course-btn button{
-    padding: 5px 10px;
+    padding: 1px 5cpx;
     color: rgb(255, 255, 255);
     background-color: rgb(35, 163, 163);
     margin: 5px 10px;
@@ -33,10 +33,10 @@
 .course-btn #searchcourse{
   max-width: 770px ;
 }
-.course-btn #coursedescriptionbutton{
-  ;
+/* .course-btn #coursedescriptionbutton{
+  
 
-}
+} */
   
     .button:hover {
       background-color: #45a049;

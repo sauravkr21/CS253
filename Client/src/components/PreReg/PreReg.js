@@ -90,7 +90,7 @@ const PreRegistration = () => {
         <div className="course-btn">
          
           <input id="searchcourse" type="text"  placeholder="search courses" />
-          <button type="button" onClick={() => navigateTo('/courses')}>Search</button> 
+          <button type="button" onClick={() => navigateTo('/courses')}>Search</button> g
           
           {/* Updated onClick handlers to use the navigateTo function */}
           <button id="coursebuttton" onClick={() => navigateTo('/Courses.js')}>Add Course</button>
