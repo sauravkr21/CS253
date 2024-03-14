@@ -5,8 +5,8 @@ const CourseClash = () => {
     <div>
       {}
       <button className="course-clash-button">
-        <a href="https://www.google.com/" className="course-clash-link">
-          Go to Course Clash
+        <a href="https://prembharwani.github.io/clash-hai-bhai/" className="course-clash-link" target='_blank' rel='noopener noreferrer'>
+          Go to Course Clash Page
         </a>
       </button>
     </div>
