@@ -17,8 +17,8 @@ const PreRegistration = () => {
           <button type="button" onClick={() => navigateTo('/courses')}>Search</button> g
           
           {/* Updated onClick handlers to use the navigateTo function */}
-          <button id="coursebuttton" onClick={() => navigateTo('/Courses.js')}>Add Course</button>
-          <button id ="timetablebutton" onClick={() => navigateTo('timetable.html')}>Timetable</button>
+          <button id="coursebuttton" onClick={() => navigateTo('/courses')}>Add Course</button>
+          {/*<button id ="timetablebutton" onClick={() => navigateTo('timetable.html')}>Timetable</button>   */}
           <button id="dropcoursebutton" onClick={() => navigateTo('DropCourse.html')}>Drop Course</button>
           <button id="coursedescriptionbutton" onClick={() => navigateTo('CourseDescription.html')}>Course Description</button>
         </div>
