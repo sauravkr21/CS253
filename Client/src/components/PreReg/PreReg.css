@@ -22,7 +22,7 @@
     
 }
 .course-btn button{
-    padding: 1px 5cpx;
+    padding: 5nnpx 10cpx;
     color: rgb(255, 255, 255);
     background-color: rgb(35, 163, 163);
     margin: 5px 10px;
@@ -31,7 +31,7 @@
     width: 
 }
 .course-btn #searchcourse{
-  max-width: 770px ;
+  max-width: 850px ;
 }
 /* .course-btn #coursedescriptionbutton{
   
