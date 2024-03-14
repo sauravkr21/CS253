@@ -10,7 +10,7 @@ const PreRegistration = () => {
 
   return (
     <>
-      <div className="flex-container">
+      <div className="">
         <div className="course-btn">
          
           <input id="searchcourse" type="text"  placeholder="search courses" />
@@ -22,7 +22,7 @@ const PreRegistration = () => {
           <button id="dropcoursebutton" onClick={() => navigateTo('DropCourse.html')}>Drop Course</button>
           <button id="coursedescriptionbutton" onClick={() => navigateTo('CourseDescription.html')}>Course Description</button>
         </div>
-
+        </div>
         <div className="content">
           <table className="calendar">
             <tr>
@@ -52,7 +52,7 @@ const PreRegistration = () => {
             <tr><td>8 PM</td></tr>
           </table>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 }
