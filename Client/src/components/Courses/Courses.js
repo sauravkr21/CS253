@@ -4,7 +4,7 @@ import './contact.css'; // Import CSS file for styling
 const Courses = () => {
   // Dummy data for courses (replace this with actual data from your backend)
   const initialCourses = [
-    { id: 1, title: 'CS253: SOFTWARE DEVELOPMENT AND OPERATIONS', link: '/cs253' },
+    { id: 1, title: 'CS253: SOFTWARE DEVELOPMENT AND OPERATIONS', link: '/Page' },
     { id: 2, title: 'EE698R: ADVANCED TOPICS IN MACHINE LEARNING', link: '/ee698r' },
     { id: 3, title: 'BSE322A: BIOINFORMATICS & COMPUTATIONAL BIOLOGY', link: '/bse322a' },
     { id: 4, title: 'PSY468A: SOCIAL COGNITION', link: '/psy468a' },
