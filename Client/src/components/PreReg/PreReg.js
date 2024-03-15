@@ -23,7 +23,9 @@ const PreRegistration = () => {
     const newCourse = {
       id: courses.length + 1,
       branch: 'ME',
-      courseId: 'ME101',
+      courseId: ' 
+      
+      ME101',
       courseName: 'Introduction to Mechanical Engineering',
       credits: 4,
       time: 'M (L02) W (L02) F (L02) 09:00-10:00',
