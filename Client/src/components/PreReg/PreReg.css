@@ -21,12 +21,12 @@
   }
   
   .course-btn button {
-    padding: 5px 10px; /* Corrected typo */
+    padding: 2px 10px; /* Corrected typo */
     color: rgb(6, 6, 6);
     margin: 5px 10px;
     font-size: 1.5rem;
     border-radius: 12px;
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease, background-color 0.3s ease; 
   }
   
   .course-btn button:hover {
@@ -39,7 +39,7 @@
   }
   
   .course-btn #searchcourse {
-    max-width: 900px;
+    max-width: 950px;
     color: black;
     font-weight: bold;
   }
