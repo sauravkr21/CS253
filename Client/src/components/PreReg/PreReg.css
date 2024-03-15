@@ -60,8 +60,9 @@
     align-items: center;
     padding: 10px;
     background-color: #f5f5f5;
-    border-radius: 4px;
     margin-bottom: 5px;
+    border-radius: 4px;
+    
   }
   
   .course-search button {
