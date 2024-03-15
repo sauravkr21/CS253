@@ -2,49 +2,68 @@ import React, { useState } from 'react';
 import "./PreReg.css";
 
 const PreRegistration = () => {
-  const navigateTo = (url) => {
-    window.location.href = url;
-  };
-
-  const [courses, setCourses] = useState([
+  // Initial course data for demonstration
+  const initialCourses = [
     { id: 1, branch: 'CSE', courseId: 'CS253', courseName: 'SOFTWARE ENGINEERING AND DEVELOPMENT', credits: 12, time: 'T (RM101) W (RM101) F (RM101) 10:00-11:00', instructor: 'Dr. Indranil Saha', status: 'Active' },
     { id: 2, branch: 'CSE', courseId: 'ESO207', courseName: 'DATA STRUCTURES AND ALGORITHMS', credits: 12, time: 'M (L07) W (L07) Th (L07) 12:00-13:00', instructor: 'Dr. Nitin Saxena', status: 'Active' },
     { id: 3, branch: 'EE', courseId: 'EE698R', courseName: 'ADVANCED TOPICS IN MACHINE LEARNING', credits: 9, time: 'T (L16) Th (L16) 17:15-18:30', instructor: 'Dr. Aparna Datt', status: 'Active' },
     { id: 4, branch: 'BSBE', courseId: 'BSE322A', courseName: 'BIOINFORMATICS & COMPUTATIONAL BIOLOGY', credits: 10, time: 'M (L01) Th (L01) 12:00-13:15', instructor: 'Dr. Nitin Gupta', status: 'Active' },
-  ]);
+    // Add your remaining initial courses here
+    { id: 5, branch: 'CSE', courseId: 'CS201A', courseName: 'Mathematics for Computerscience I', credits: 10, time: 'M (L01) Th (L01) 9:00-9:00', instructor: 'Dr. rajat mittal', status: 'Active' },
+    { id: 6, branch: 'CSE', courseId: '202M', courseName: 'Mathematics for Computerscience II', credits: 10, time: 'M (L01) Th (L01) 9:00-9:00', instructor: 'Dr. Mahendra Agrwal', status: 'Active' },
+    { id: 7, branch: 'CSE', courseId: '203M', courseName: 'Mathematics for Computerscience III', credits: 10, time: 'M (L01) Th (L01) 9:00-9:00', instructor: 'Dr. Subhajit Roy', status: 'Active' },
+    { id: 8, branch: 'CSE', courseId: '220A', courseName: 'Hardware Development', credits: 12, time: 'M (L01) Th (L01) 11:00-12:00', instructor: 'Dr. Mainak Chaudhry', status: 'Active' },
+   
+    
+  ];
 
-  const handleDelete = (id) => {
-    const updatedCourses = courses.filter(course => course.id !== id);
-    setCourses(updatedCourses);
+  const [courses, setCourses] = useState(initialCourses); // Courses already selected for pre-registration
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]); // To hold search results
+
+  const handleSearchChange = (event) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+    if (!value.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    // Filter through initialCourses for matching names or IDs
+    const results = initialCourses.filter(course =>
+      course.courseName.toLowerCase().includes(value.toLowerCase()) ||
+      course.courseId.toLowerCase().includes(value.toLowerCase())
+    );
+    setSearchResults(results);
   };
 
-  // Function to simulate adding a course
-  const handleAddCourse = () => {
-    const newCourse = {
-      id: courses.length + 1,
-      branch: 'ME',
-      courseId: 'ME101',
-      courseName: 'Introduction to Mechanical Engineering',
-      credits: 4,
-      time: 'M (L02) W (L02) F (L02) 09:00-10:00',
-      instructor: 'Dr. Mechanical Genius',
-      status: 'Active',
-    };
+  const handleAddCourse = (course) => {
+    // Prevent adding duplicate courses
+    if (!courses.find(c => c.id === course.id)) {
+      setCourses([...courses, course]);
+    }
+  };
 
-    setCourses([...courses, newCourse]);
+  const handleDelete = (id) => {
+    setCourses(courses.filter(course => course.id !== id));
   };
 
   return (
     <>
-      {/* Section with buttons at the top */}
-      <div className="course-btn">
-        <input id="searchcourse" type="text" placeholder="search courses" />
-        <button type="button" onClick={() => navigateTo('/courses')}>Search</button>
-        <button id="coursebuttton" onClick={handleAddCourse}>Add Course</button>
-        <button id="coursedescriptionbutton" onClick={() => navigateTo('/courses')}>Course Description</button>
+      <div className="course-search">
+        <input
+          type="text"
+          placeholder="Search courses by name or ID..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        {searchResults.map(course => (
+          <div key={course.id}>
+            {course.courseName} ({course.courseId})
+            <button onClick={() => handleAddCourse(course)}>Add</button>
+          </div>
+        ))}
       </div>
 
-      {/* Selected courses section */}
       <div className="selected-courses">
         <h2>Selected Courses</h2>
         <table>
@@ -58,7 +77,7 @@ const PreRegistration = () => {
               <th>Time Slot</th>
               <th>Instructor</th>
               <th>Status</th>
-              <th>Edit/Drop</th>
+              <th>Drop</th>
             </tr>
           </thead>
           <tbody>
@@ -79,8 +98,9 @@ const PreRegistration = () => {
         </table>
       </div>
 
-      {/* Timetable section */}
+      {/* Your timetable section remains unchanged */}
       <div className="content">
+        {/* Timetable content goes here */}
         <table className="calendar">
           <thead>
             <tr>
@@ -113,6 +133,9 @@ const PreRegistration = () => {
           </tbody>
         </table>
       </div>
+
+
+      
     </>
   );
 };
