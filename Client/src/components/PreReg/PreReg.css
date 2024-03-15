@@ -124,5 +124,14 @@
     background-color: #28a745;
     color: white;
   }
+  .timetable-cell {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .highlighted {
+    background-color: lightgreen;
+  }
   
   

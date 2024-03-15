@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./PreReg.css";
 
 const PreRegistration = () => {
-  // Initial course data for demonstration
   const initialCourses = [
     { id: 1, branch: 'CSE', courseId: 'CS253', courseName: 'SOFTWARE ENGINEERING AND DEVELOPMENT', credits: 12, time: 'T (RM101) W (RM101) F (RM101) 10:00-11:00', instructor: 'Dr. Indranil Saha', status: 'Active' },
     { id: 2, branch: 'CSE', courseId: 'ESO207', courseName: 'DATA STRUCTURES AND ALGORITHMS', credits: 12, time: 'M (L07) W (L07) Th (L07) 12:00-13:00', instructor: 'Dr. Nitin Saxena', status: 'Active' },
     { id: 3, branch: 'EE ', courseId: 'EE698R', courseName: 'ADVANCED TOPICS IN MACHINE LEARNING', credits: 9, time: 'T (L16) Th (L16) 17:15-18:30', instructor: 'Dr. Aparna Datt', status: 'Active' },
     { id: 4, branch: 'BSBE', courseId: 'BSE322A', courseName: 'BIOINFORMATICS & COMPUTATIONAL BIOLOGY', credits: 10, time: 'M (L01) Th (L01) 12:00-13:15', instructor: 'Dr. Nitin Gupta', status: 'Active' },
     // Add your remaining initial courses here
-    { id: 5, branch: 'CSE', courseId: 'CS201A', courseName: 'Mathematics for Computerscience I', credits: 10, time: 'M (L01) Th (L01) 9:00-9:00', instructor: 'Dr. rajat mittal', status: 'Active' },
-    { id: 6, branch: 'CSE', courseId: '202M', courseName: 'Mathematics for Computerscience II', credits: 10, time: 'M (L01) Th (L01) 9:00-9:00', instructor: 'Dr. Mahendra Agrwal', status: 'Active' },
-    { id: 7, branch: 'CSE', courseId: '203M', courseName: 'Mathematics for Computerscience III', credits: 10, time: 'M (L01) Th (L01) 9:00-9:00', instructor: 'Dr. Subhajit Roy', status: 'Active' },
+    { id: 5, branch: 'CSE', courseId: 'CS201A', courseName: 'Mathematics for Computerscience I', credits: 10, time: 'M (L01) Th (L01) 9:00-10:00', instructor: 'Dr. rajat mittal', status: 'Active' },
+    { id: 6, branch: 'CSE', courseId: '202M', courseName: 'Mathematics for Computerscience II', credits: 10, time: 'M (L01) Th (L01) 8:00-9:00', instructor: 'Dr. Mahendra Agrwal', status: 'Active' },
+    { id: 7, branch: 'CSE', courseId: '203M', courseName: 'Mathematics for Computerscience III', credits: 10, time: 'M (L01) Th (L01) 16:00-17:00', instructor: 'Dr. Subhajit Roy', status: 'Active' },
     { id: 8, branch: 'CSE', courseId: '220A', courseName: 'Hardware Development', credits: 12, time: 'M (L01) Th (L01) 11:00-12:00', instructor: 'Dr. Mainak Chaudhry', status: 'Active' },
-   
-    
+  
+    // Your initial courses array, omitted for brevity
   ];
 
-  const [courses, setCourses] = useState(initialCourses); // Courses already selected for pre-registration
+  const [courses, setCourses] = useState(initialCourses);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]); // To hold search results
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchChange = (event) => {
     const { value } = event.target;
@@ -28,7 +27,6 @@ const PreRegistration = () => {
       setSearchResults([]);
       return;
     }
-    // Filter through initialCourses for matching names or IDs
     const results = initialCourses.filter(course =>
       course.courseName.toLowerCase().includes(value.toLowerCase()) ||
       course.courseId.toLowerCase().includes(value.toLowerCase())
@@ -37,8 +35,7 @@ const PreRegistration = () => {
   };
 
   const handleAddCourse = (course) => {
-    // Prevent adding duplicate courses
-    if (!courses.find(c => c.id === course.id)) {
+    if (!courses.some(c => c.id === course.id)) {
       setCourses([...courses, course]);
     }
   };
@@ -46,6 +43,45 @@ const PreRegistration = () => {
   const handleDelete = (id) => {
     setCourses(courses.filter(course => course.id !== id));
   };
+
+  // Parse course time for timetable generation
+  const parseCourseTime = (timeString) => {
+    const dayMappings = { M: 'Monday', T: 'Tuesday', W: 'Wednesday', Th: 'Thursday', F: 'Friday' };
+    const matches = timeString.match(/([MTWThF]+) \(\w+\) ([\d:]+)-([\d:]+)/);
+    if (!matches) return [];
+
+    const [ , days, startTime, endTime ] = matches;
+    return days.split('').flatMap(day => {
+      if (dayMappings[day]) {
+        return { day: dayMappings[day], startTime, endTime };
+      }
+      return [];
+    });
+  };
+
+  // Generate timetable based on selected courses
+  const generateTimetable = () => {
+    const timetable = {};
+    for (let hour = 7; hour <= 20; hour++) {
+      const time = `${hour < 10 ? '0' : ''}${hour}:00`;
+      timetable[time] = { Monday: '', Tuesday: '', Wednesday: '', Thursday: '', Friday: '', Saturday: '', Sunday: '' };
+      
+      courses.forEach(course => {
+        parseCourseTime(course.time).forEach(({ day, startTime, endTime }) => {
+          if (startTime <= time && time < endTime) {
+            timetable[time][day] = course.courseName;
+          }
+        });
+      });
+    }
+    return timetable;
+  };
+
+  const [timetable, setTimetable] = useState(generateTimetable());
+
+  useEffect(() => {
+    setTimetable(generateTimetable());
+  }, [courses]); // Recalculate timetable when courses change
 
   return (
     <>
@@ -57,7 +93,7 @@ const PreRegistration = () => {
           onChange={handleSearchChange}
         />
         {searchResults.map(course => (
-          <div key={course.id}>
+          <div key={course.id} className="search-result">
             {course.courseName} ({course.courseId})
             <button onClick={() => handleAddCourse(course)}>Add</button>
           </div>
@@ -98,13 +134,11 @@ const PreRegistration = () => {
         </table>
       </div>
 
-      {/* Your timetable section remains unchanged */}
       <div className="content">
-        {/* Timetable content goes here */}
         <table className="calendar">
           <thead>
             <tr>
-              <th>Time</th>
+              <th>Time/Day</th>
               <th>Monday</th>
               <th>Tuesday</th>
               <th>Wednesday</th>
@@ -115,29 +149,24 @@ const PreRegistration = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Calendar rows */}
-            <tr><td>7 AM</td></tr>
-            <tr><td>8 AM</td></tr>
-            <tr><td>9 AM</td></tr>
-            <tr><td>10 AM</td></tr>
-            <tr><td>11 AM</td></tr>
-            <tr><td>12 PM</td></tr>
-            <tr><td>1 PM</td></tr>
-            <tr><td>2 PM</td></tr>
-            <tr><td>3 PM</td></tr>
-            <tr><td>4 PM</td></tr>
-            <tr><td>5 PM</td></tr>
-            <tr><td>6 PM</td></tr>
-            <tr><td>7 PM</td></tr>
-            <tr><td>8 PM</td></tr>
+            {Object.keys(timetable).map(time => (
+              <tr key={time}>
+                <td>{time}</td>
+                {Object.values(timetable[time]).map((course, i) => (
+                  <td key={i} className={course ? 'highlighted timetable-cell' : 'timetable-cell'}>
+                    {course}
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-
-
-      
     </>
   );
 };
 
 export default PreRegistration;
+
+
+
