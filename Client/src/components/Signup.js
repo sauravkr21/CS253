@@ -8,7 +8,8 @@ import { useState } from "react";
     email: "",
     phone: "",
     password: "",
-    cpassword:""
+    cpassword:"",
+    type:""
   });
 
   const handleInput = (e) => {
@@ -28,7 +29,7 @@ import { useState } from "react";
   };
   const PostData = async (e)=>{
     e.preventDefault();
-    const {name,email,phone,password,cpassword} =user;
+    const {name,email,phone,password,cpassword,type} =user;
  
     const res = await fetch('/signup',{
        method:"POST",
@@ -36,7 +37,7 @@ import { useState } from "react";
            "Content-Type":"application/json"
        },
        body: JSON.stringify({
-         name,email,phone,password,cpassword
+         name,email,phone,password,cpassword,type
        })
     });
     const data = await res.json()
@@ -110,6 +111,13 @@ import { useState } from "react";
                       onChange={handleInput}
                       placeholder="password"
                     />
+                  </div>
+                  <div>
+                    <label htmlFor="type">Type</label>
+                    <select id="type" name="type" value={user.type} onChange={handleInput}>
+                      <option value="Admin">Admin</option>
+                      <option value="Client">Client</option>
+                    </select>
                   </div>
                   <br />
                   <button type="submit" className="btn btn-submit" onClick={PostData} >
