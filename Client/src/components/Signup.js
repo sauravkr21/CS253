@@ -1,15 +1,18 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+
 // import "./Signup.css";
 
 
  const Signup = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
     password: "",
     cpassword:"",
-    type:""
+    // people:""
   });
 
   const handleInput = (e) => {
@@ -29,7 +32,7 @@ import { useState } from "react";
   };
   const PostData = async (e)=>{
     e.preventDefault();
-    const {name,email,phone,password,cpassword,type} =user;
+    const {name,email,phone,password,cpassword} =user;
  
     const res = await fetch('/signup',{
        method:"POST",
@@ -37,7 +40,7 @@ import { useState } from "react";
            "Content-Type":"application/json"
        },
        body: JSON.stringify({
-         name,email,phone,password,cpassword,type
+         name,email,phone,password,cpassword
        })
     });
     const data = await res.json()
@@ -45,6 +48,7 @@ import { useState } from "react";
        window.alert("Invalid Registration");
        console.log("invalid Registration");
      }else {
+       navigate('/login');
        window.alert("Registration Successful");
        console.log("Registration Successful");
      }
@@ -112,13 +116,13 @@ import { useState } from "react";
                       placeholder="password"
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label htmlFor="type">Type</label>
-                    <select id="type" name="type" value={user.type} onChange={handleInput}>
+                    <select id="type" name="people" value={user.type} onChange={handleInput}>
                       <option value="Admin">Admin</option>
                       <option value="Client">Client</option>
                     </select>
-                  </div>
+                  </div> */}
                   <br />
                   <button type="submit" className="btn btn-submit" onClick={PostData} >
                     Register Now

@@ -1,7 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import "./PreReg.css";
+import {useNavigate} from 'react-router-dom';
 
 const PreRegistration = () => {
+  const[userData,setUserData] =useState();
+  const navigate =useNavigate();
+  const callPrePage =async()=>{
+    try{
+       const res = await fetch('/preregistration',{
+        method:"GET",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json",
+        },
+        credentials:"include",
+       });
+
+       const data = await res.json();
+       console.log(data);
+       setUserData(data);
+       if(!res.status===200){
+        const error =new Error(res.error);
+        throw error;
+       }
+
+    }catch(err){
+         console.log(err);
+         navigate('/login');
+    }
+  }
+  useEffect(()=>{
+    callPrePage();
+  },[]);
   const initialCourses = [
     { id: 1, branch: 'CSE', courseId: 'CS253', courseName: 'SOFTWARE ENGINEERING AND DEVELOPMENT', credits: 12, time: 'T (RM101) W (RM101) F (RM101) 10:00-11:00', instructor: 'Dr. Indranil Saha', status: 'Active' },
     { id: 2, branch: 'CSE', courseId: 'ESO207', courseName: 'DATA STRUCTURES AND ALGORITHMS', credits: 12, time: 'M (L07) W (L07) Th (L07) 12:00-13:00', instructor: 'Dr. Nitin Saxena', status: 'Active' },

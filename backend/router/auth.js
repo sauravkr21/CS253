@@ -3,6 +3,7 @@ const jwt=require('jsonwebtoken');
 const router =express.Router();
 const bcrypt=require('bcryptjs');
 require('../db/conn');
+const authenticate= require("../middleware/authenticate");
 
 const User= require("../model/UserSchema");
 
@@ -43,8 +44,8 @@ router.post('/signup', async (req,res)=>{
             return res.status(422).json({error:"plzz fiels the field"}); 
         }else {
             const user= new User({name,email,phone,password,cpassword});
-            
             await user.save();
+            console.log(res.body);
             res.status(201).json({error:"succesfully registred"});
         }
 
@@ -83,7 +84,23 @@ router.post('/login' , async (req,res)=>{
     }
 
 })
+router.post('/logout' , async (req,res)=>{
+        res.clearCookie('jwtoken',{path:'/'});
+        res.status(200).send("user logout");
+})
 
+router.get('/preregistration',authenticate,(req,res)=>{
+    res.send(req.rootUser);
+});
+router.get('/courseclash',authenticate,(req,res)=>{
+    res.send(req.rootUser);
+});
+router.get('/courses',authenticate,(req,res)=>{
+    res.send(req.rootUser);
+});
+router.get('/announcement',authenticate,(req,res)=>{
+    res.send(req.rootUser);
+});
 
 
 module.exports = router;

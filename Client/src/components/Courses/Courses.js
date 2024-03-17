@@ -1,7 +1,37 @@
-import React, { useState } from 'react';
+import React ,{useEffect,useState} from 'react';
 import './contact.css'; // Import CSS file for styling
+import {useNavigate} from 'react-router-dom';
 
 const Courses = () => {
+  const[userData,setUserData] =useState();
+  const navigate =useNavigate();
+  const callCourse =async()=>{
+    try{
+       const res = await fetch('/courses',{
+        method:"GET",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json",
+        },
+        credentials:"include",
+       });
+
+       const data = await res.json();
+       console.log(data);
+       setUserData(data);
+       if(!res.status===200){
+        const error =new Error(res.error);
+        throw error;
+       }
+
+    }catch(err){
+         console.log(err);
+         navigate('/login');
+    }
+  }
+  useEffect(()=>{
+    callCourse();
+  },[]);
   // Dummy data for courses (replace this with actual data from your backend)
   const initialCourses = [
     { id: 1, title: 'CS253: SOFTWARE DEVELOPMENT AND OPERATIONS', link: '/cs253' },
