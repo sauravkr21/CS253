@@ -5,8 +5,8 @@ const CoursePage = () => {
   // Define state for comment text, discussion topics, new topic input, and current topic
   const [commentText, setCommentText] = useState('');
   const [topics, setTopics] = useState([
-    { id: 1, title: 'Nature of the course', comments: [] },
-    { id: 2, title: 'Who sould consider this course ', comments: [] },
+    { id: 1, title: 'Find a group/team', comments: [] },
+    { id: 2, title: 'Difficulty for undergrads ', comments: [] },
   ]);
   const [currentTopic, setCurrentTopic] = useState(null);
   const [newTopicName, setNewTopicName] = useState('');

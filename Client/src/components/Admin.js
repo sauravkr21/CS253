@@ -225,7 +225,8 @@ const App = () => {
           </div>
           <div className="form-group">
             <label htmlFor="time">Time:</label>
-            <input type="text" id="time" name="time" value={formData.time} onChange={handleChange} required />
+            <input type="text" placeholder="Timings (Day HH:MM-HH:MM, Day HH:MM-HH:MM, ...)" value={formData.time} onChange={handleChange} required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="instructor">Instructor:</label>
