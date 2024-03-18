@@ -47,10 +47,10 @@ const PreRegistration = () => {
   // Timetable generation with conflict detection
   useEffect(() => {
     const updateTimetable = () => {
-      const dayMappings = { M: 'Monday', T: 'Tuesday', W: 'Wednesday', Th: 'Thursday', F: 'Friday' };
+      const dayMappings = { M: 'Monday', T: 'Tuesday', W: 'Wednesday', Th: 'Thursday', F: 'Friday' ,SA:'Saturday',SN :'Sunday'};
       let newTimetable = {};
 
-      for (let hour = 7; hour <= 20; hour++) {
+      for (let hour = 7; hour <= 18; hour++) {
         let time = '';
         if (hour === 12) {
           time = `${hour}:00 pm`;
@@ -59,7 +59,7 @@ const PreRegistration = () => {
         } else {
           time = `${hour}:00 am`;
         }
-        newTimetable[time] = { Monday: [], Tuesday: [], Wednesday: [], Thursday: [], Friday: [] };
+        newTimetable[time] = { Monday: [], Tuesday: [], Wednesday: [], Thursday: [], Friday: [],Saturday: [], Sunday:[] };
       }
 
       courses.forEach(course => {
@@ -173,6 +173,8 @@ const PreRegistration = () => {
               <th>Wednesday</th>
               <th>Thursday</th>
               <th>Friday</th>
+              <th>Saturday</th>
+              <th>Sunday</th>
             </tr>
           </thead>
           <tbody>
