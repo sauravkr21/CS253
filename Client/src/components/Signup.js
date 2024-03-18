@@ -1,14 +1,18 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+
 // import "./Signup.css";
 
 
  const Signup = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
     password: "",
-    cpassword:""
+    cpassword:"",
+    // people:""
   });
 
   const handleInput = (e) => {
@@ -44,6 +48,7 @@ import { useState } from "react";
        window.alert("Invalid Registration");
        console.log("invalid Registration");
      }else {
+       navigate('/login');
        window.alert("Registration Successful");
        console.log("Registration Successful");
      }
@@ -111,6 +116,13 @@ import { useState } from "react";
                       placeholder="password"
                     />
                   </div>
+                  {/* <div>
+                    <label htmlFor="type">Type</label>
+                    <select id="type" name="people" value={user.type} onChange={handleInput}>
+                      <option value="Admin">Admin</option>
+                      <option value="Client">Client</option>
+                    </select>
+                  </div> */}
                   <br />
                   <button type="submit" className="btn btn-submit" onClick={PostData} >
                     Register Now

@@ -1,8 +1,39 @@
-import React from 'react';
+import React ,{useEffect,useState} from 'react';
 import "./Announcement.css";
+import {useNavigate} from 'react-router-dom';
+
 
 const Announcement = () => {
   // Sample announcement data (can be fetched from an API or stored in state)
+  const[userData,setUserData] =useState();
+  const navigate =useNavigate();
+  const callAnnounce =async()=>{
+    try{
+       const res = await fetch('/announcement',{
+        method:"GET",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json",
+        },
+        credentials:"include",
+       });
+
+       const data = await res.json();
+       console.log(data);
+       setUserData(data);
+       if(!res.status===200){
+        const error =new Error(res.error);
+        throw error;
+       }
+
+    }catch(err){
+         console.log(err);
+         navigate('/login');
+    }
+  }
+  useEffect(()=>{
+    callAnnounce();
+  },[]);
   const announcements = [
     {
       id: 1,

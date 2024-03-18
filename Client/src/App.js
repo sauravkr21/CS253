@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{createContext, useReducer} from 'react';
 import {Route,Routes} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
@@ -13,11 +13,16 @@ import Signup from './components/Signup';
 import Announcement from './components/Announcement/Announcement';
 import Admin from './components/Admin';
 import Page from './components/Courses/Courses_page/Page';
+import Logout from './components/Logout';
+import {initialState,reducer} from '../src/reducer/UseReducer';
 
+export const UserContext=createContext();
 
 const App =()=>{
+  const [state,dispatch] =useReducer(reducer,initialState)
   return (
     <>
+    <UserContext.Provider value={{state,dispatch}}>
      <Navbar/>
     <Routes>
       <Route exact path='/' element={<Home/>}></Route>
@@ -29,7 +34,9 @@ const App =()=>{
       <Route path='/signup' element={<Signup/>}></Route>
       <Route path='/admin' element={<Admin/>}></Route>
       <Route path='/page' element={<Page/>}></Route>
+      <Route path='/logout' element={<Logout/>}></Route>
     </Routes>
+    </UserContext.Provider>
     </>
   )
 }

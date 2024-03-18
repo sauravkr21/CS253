@@ -1,7 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import "./PreReg.css";
+import {useNavigate} from 'react-router-dom';
 
 const PreRegistration = () => {
+<<<<<<< HEAD
+  const[userData,setUserData] =useState();
+  const navigate =useNavigate();
+  const callPrePage =async()=>{
+    try{
+       const res = await fetch('/preregistration',{
+        method:"GET",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json",
+        },
+        credentials:"include",
+       });
+
+       const data = await res.json();
+       console.log(data);
+       setUserData(data);
+       if(!res.status===200){
+        const error =new Error(res.error);
+        throw error;
+       }
+
+    }catch(err){
+         console.log(err);
+         navigate('/login');
+    }
+  }
+  useEffect(()=>{
+    callPrePage();
+  },[]);
   const initialCourses = [
     { id: 1, branch: 'CSE', courseId: 'CS253', courseName: 'SOFTWARE ENGINEERING AND DEVELOPMENT', credits: 12, time: 'T (RM101) W (RM101) F (RM101) 10:00-11:00', instructor: 'Dr. Indranil Saha', status: 'Active' },
     { id: 2, branch: 'CSE', courseId: 'ESO207', courseName: 'DATA STRUCTURES AND ALGORITHMS', credits: 12, time: 'M (L07) W (L07) Th (L07) 12:00-13:00', instructor: 'Dr. Nitin Saxena', status: 'Active' },
@@ -74,34 +105,76 @@ const PreRegistration = () => {
         });
       });
     }
-    return timetable;
+    return timetableGrid;
   };
-
-  const [timetable, setTimetable] = useState(generateTimetable());
-
-  useEffect(() => {
-    setTimetable(generateTimetable());
-  }, [courses]); // Recalculate timetable when courses change
+  
+  // Function to filter courses based on search query
+  const filteredCourses = courses.filter(course =>
+    course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    course.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    course.instructor.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <>
-      <div className="course-search">
+    <div className="pre-registration">
+      <h1>Pre-Registration Page</h1>
+
+      {/* Button to toggle the visibility of the add course form */}
+      <div className="add-course-button">
+        <button onClick={() => setShowAddCourseForm(!showAddCourseForm)}>New Course</button>
+      </div>
+      {/* Add course form */}
+      {showAddCourseForm && (
+        <div className="add-course">
+          <input
+            type="text"
+            placeholder="Course ID"
+            value={newCourseId}
+            onChange={(e) => setNewCourseId(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Course Name"
+            value={newCourseName}
+            onChange={(e) => setNewCourseName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Timings (Day HH:MM-HH:MM, Day HH:MM-HH:MM, ...)"
+            value={newCourseTimings}
+            onChange={(e) => setNewCourseTimings(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Instructor"
+            value={newCourseInstructor}
+            onChange={(e) => setNewCourseInstructor(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Branch"
+            value={newCourseBranch}
+            onChange={(e) => setNewCourseBranch(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Credits"
+            value={newCourseCredits}
+            onChange={(e) => setNewCourseCredits(e.target.value)}
+          />
+          <button onClick={handleAddCourse}>Add Course</button>
+        </div>
+      )}
+      <div className="course-list">
+        <h2>Course List</h2>
+        {/* Search input field */}
         <input
           type="text"
-          placeholder="Search courses by name or ID..."
-          value={searchTerm}
-          onChange={handleSearchChange}
+          placeholder="Search courses"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        {searchResults.map(course => (
-          <div key={course.id} className="search-result">
-            {course.courseName} ({course.courseId})
-            <button onClick={() => handleAddCourse(course)}>Add</button>
-          </div>
-        ))}
-      </div>
-
-      <div className="selected-courses">
-        <h2>Selected Courses</h2>
+        {/* Course list table */}
         <table>
           <thead>
             <tr>
@@ -110,32 +183,32 @@ const PreRegistration = () => {
               <th>Course ID</th>
               <th>Course Name</th>
               <th>Credits</th>
-              <th>Time Slot</th>
+              <th>Time slot</th>
               <th>Instructor</th>
-              <th>Status</th>
-              <th>Drop</th>
+              <th>Add/Drop</th>
             </tr>
           </thead>
           <tbody>
-            {courses.map((course, index) => (
-              <tr key={course.id}>
+            {filteredCourses.map((course, index) => (
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{course.branch}</td>
-                <td>{course.courseId}</td>
-                <td>{course.courseName}</td>
+                <td>{course.id}</td>
+                <td>{course.name}</td>
                 <td>{course.credits}</td>
-                <td>{course.time}</td>
+                <td>{course.timings.map(timing => `${timing.day} ${timing.start}-${timing.end}`).join(', ')}</td>
                 <td>{course.instructor}</td>
-                <td>{course.status}</td>
-                <td><button onClick={() => handleDelete(course.id)}>Drop</button></td>
+                <td>
+                  <button onClick={() => handleDropCourse(index)}>Add/Drop</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <div className="content">
-        <table className="calendar">
+      <div className="timetable">
+        <h2>Timetable</h2>
+        <table>
           <thead>
             <tr>
               <th>Time/Day</th>
@@ -149,24 +222,12 @@ const PreRegistration = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(timetable).map(time => (
-              <tr key={time}>
-                <td>{time}</td>
-                {Object.values(timetable[time]).map((course, i) => (
-                  <td key={i} className={course ? 'highlighted timetable-cell' : 'timetable-cell'}>
-                    {course}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {generateTimetableGrid()}
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 
 export default PreRegistration;
-
-
-

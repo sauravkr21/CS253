@@ -22,8 +22,9 @@ const userSchema =new mongoose.Schema({
         type:String,
         required:true
     },
-    // Type:{
+    // people:{
     //     type:String,
+    //     enum:['Admin','Client'],
     //     required:true
     // },
     tokens:[
