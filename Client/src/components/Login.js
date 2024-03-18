@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../App";
 
  const Login = () => {
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
+  const {state,dispatch} = useContext(UserContext);
+  const [email,setEmail] =useState('');
+  const [password,setPassword] =useState('');
 
   const navigate = useNavigate();
 
-  // let handle the input field value
-  const handleInput = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
-  const handleSubmit = (e) => {
+  const loginUser = async (e)=>{
     e.preventDefault();
-    console.log(user);
-  };
+    const res = await fetch('/login',{
+       method:"POST",
+       headers:{
+           "Content-Type":"application/json"
+       },
+       body: JSON.stringify({
+         email,password
+       })
+    });
+    const data = await res.json()
+     if(data.status===400 || !data){
+       window.alert("Invalid Registration");
+       console.log("invalid Registration");
+     }else {
+       dispatch({type:"USER",payload:true});
+       window.alert("Login Successful");
+       console.log("Login Successful");
+       navigate('/');
+     }
+ }
 
   return (
     <>
@@ -34,14 +42,14 @@ import { useNavigate } from "react-router-dom";
               <div className="registration-form">
                 <h1 className="main-heading mb-3">Login form</h1>
                 <br />
-                <form onSubmit={handleSubmit}>
+                <form >
                   <div>
                     <label htmlFor="email">email</label>
                     <input
                       type="text"
                       name="email"
-                      value={user.email}
-                      onChange={handleInput}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="email"
                     />
                   </div>
@@ -51,13 +59,13 @@ import { useNavigate } from "react-router-dom";
                     <input
                       type="password"
                       name="password"
-                      value={user.password}
-                      onChange={handleInput}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="password"
                     />
                   </div>
                   <br />
-                  <button type="submit" className="btn btn-submit ">
+                  <button type="submit" className="btn btn-submit " onClick={loginUser}>
                     Login
                   </button>
                 </form>

@@ -1,9 +1,52 @@
 import React, { useState } from 'react';
 import "./PreReg.css";
+import {useNavigate} from 'react-router-dom';
 
 const PreRegistration = () => {
+<<<<<<< HEAD
+  const[userData,setUserData] =useState();
+  const navigate =useNavigate();
+  const callPrePage =async()=>{
+    try{
+       const res = await fetch('/preregistration',{
+        method:"GET",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json",
+        },
+        credentials:"include",
+       });
+
+       const data = await res.json();
+       console.log(data);
+       setUserData(data);
+       if(!res.status===200){
+        const error =new Error(res.error);
+        throw error;
+       }
+
+    }catch(err){
+         console.log(err);
+         navigate('/login');
+    }
+  }
+  useEffect(()=>{
+    callPrePage();
+  },[]);
+  const initialCourses = [
+    { id: 1, branch: 'CSE', courseId: 'CS253', courseName: 'SOFTWARE ENGINEERING AND DEVELOPMENT', credits: 12, time: 'T (RM101) W (RM101) F (RM101) 10:00-11:00', instructor: 'Dr. Indranil Saha', status: 'Active' },
+    { id: 2, branch: 'CSE', courseId: 'ESO207', courseName: 'DATA STRUCTURES AND ALGORITHMS', credits: 12, time: 'M (L07) W (L07) Th (L07) 12:00-13:00', instructor: 'Dr. Nitin Saxena', status: 'Active' },
+    { id: 3, branch: 'EE ', courseId: 'EE698R', courseName: 'ADVANCED TOPICS IN MACHINE LEARNING', credits: 9, time: 'T (L16) Th (L16) 17:15-18:30', instructor: 'Dr. Aparna Datt', status: 'Active' },
+    { id: 4, branch: 'BSBE', courseId: 'BSE322A', courseName: 'BIOINFORMATICS & COMPUTATIONAL BIOLOGY', credits: 10, time: 'M (L01) Th (L01) 12:00-13:15', instructor: 'Dr. Nitin Gupta', status: 'Active' },
+    // Add your remaining initial courses here
+    { id: 5, branch: 'CSE', courseId: 'CS201A', courseName: 'Mathematics for Computerscience I', credits: 10, time: 'M (L01) Th (L01) 9:00-10:00', instructor: 'Dr. rajat mittal', status: 'Active' },
+    { id: 6, branch: 'CSE', courseId: '202M', courseName: 'Mathematics for Computerscience II', credits: 10, time: 'M (L01) Th (L01) 8:00-9:00', instructor: 'Dr. Mahendra Agrwal', status: 'Active' },
+    { id: 7, branch: 'CSE', courseId: '203M', courseName: 'Mathematics for Computerscience III', credits: 10, time: 'M (L01) Th (L01) 16:00-17:00', instructor: 'Dr. Subhajit Roy', status: 'Active' },
+    { id: 8, branch: 'CSE', courseId: '220A', courseName: 'Hardware Development', credits: 12, time: 'M (L01) Th (L01) 11:00-12:00', instructor: 'Dr. Mainak Chaudhry', status: 'Active' },
+=======
   // State to hold the list of courses
   const [courses, setCourses] = useState([]);
+>>>>>>> 58dd85df1daf08f7c502dfa2ab56b3480a2cba43
   
   // State to hold the input values for adding a new course
   const [newCourseName, setNewCourseName] = useState('');
