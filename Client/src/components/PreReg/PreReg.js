@@ -69,7 +69,7 @@ const PreRegistration = () => {
       courses.forEach(course => {
         parseCourseTime(course.time).forEach(({ day, startTime, endTime }) => {
           if (startTime <= time && time < endTime) {
-            timetable[time][day] = course.courseName;
+            timetable[time][day] = course.courseId;
           }
         });
       });
