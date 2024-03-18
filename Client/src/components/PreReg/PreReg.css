@@ -135,5 +135,7 @@
   .highlighted {
     background-color: lightgreen;
   }
-  
-  
+  .conflicted {
+    background-color: red;
+    color: white; /* Optionally change text color to improve readability */
+}
