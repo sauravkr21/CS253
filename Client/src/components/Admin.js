@@ -145,17 +145,6 @@ const App = () => {
   return (
     <div className="admin-container">
       <h1>Admin Page</h1>
-      <div className="branch-select">
-        <label htmlFor="branch">Select Branch:</label>
-        <select id="branch" name="branch" value={selectedBranch} onChange={handleBranchChange}>
-          <option value="">All</option>
-          <option value="AE">AE</option>
-          <option value="BSBE">BSBE</option>
-          <option value="CE">CE</option>
-          <option value="CSE">CSE</option>
-          <option value="EE">EE</option>
-        </select>
-      </div>
       <div className="search-course">
         <label htmlFor="search">Search Course by Name:</label>
         <input type="text" id="search" name="search" value={searchText} onChange={handleSearchChange} />
@@ -225,7 +214,7 @@ const App = () => {
           </div>
           <div className="form-group">
             <label htmlFor="time">Time:</label>
-            <input type="text" placeholder="Timings (Day HH:MM-HH:MM, Day HH:MM-HH:MM, ...)" value={formData.time} onChange={handleChange} required
+            <input type="text" placeholder="Timings (Day HH:MM-HH:MM, Day HH:MM-HH:MM, ...)" name="time" value={formData.time} onChange={handleChange} required
             />
           </div>
           <div className="form-group">
